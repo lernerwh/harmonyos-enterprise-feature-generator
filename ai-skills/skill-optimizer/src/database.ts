@@ -165,7 +165,7 @@ export default class SkillOptimizerDB {
       FROM skill_calls sc
       LEFT JOIN skill_results sr ON sc.id = sr.call_id
       WHERE sc.skill_name = ?
-      ORDER BY sc.timestamp DESC
+      ORDER BY sc.timestamp DESC, sc.id DESC
       LIMIT ?
     `);
 
