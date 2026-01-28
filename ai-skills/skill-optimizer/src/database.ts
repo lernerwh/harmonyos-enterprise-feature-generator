@@ -8,6 +8,8 @@ export default class SkillOptimizerDB {
     this.db = new Database(dbPath);
     // Enable WAL mode for better concurrency
     this.db.pragma('journal_mode = WAL');
+    // Initialize tables
+    this.initTables();
   }
 
   initTables(): void {
