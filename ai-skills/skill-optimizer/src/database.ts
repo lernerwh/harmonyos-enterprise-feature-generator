@@ -76,13 +76,13 @@ export default class SkillOptimizerDB {
     return result.lastInsertRowid as number;
   }
 
-  recordSkillResult(result: Omit<SkillResult, 'id' | 'timestamp'>): number {
+  recordSkillResult(result: Omit<SkillResult, 'id' | 'timestamp'>): void {
     const stmt = this.db.prepare(`
       INSERT INTO skill_results (call_id, success_rate, user_rating, turns, follow_up_questions, accepted_suggestions)
       VALUES (?, ?, ?, ?, ?, ?)
     `);
 
-    const insertResult = stmt.run(
+    stmt.run(
       result.call_id,
       result.success_rate,
       result.user_rating || null,
@@ -98,8 +98,6 @@ export default class SkillOptimizerDB {
     if (call) {
       this.updateMetrics(call.skill_name);
     }
-
-    return insertResult.lastInsertRowid as number;
   }
 
   private updateMetrics(skillName: string): void {
@@ -155,16 +153,23 @@ export default class SkillOptimizerDB {
     return row || null;
   }
 
-  getRecentCalls(skillName: string, limit: number = 10): SkillCall[] {
+  getRecentCalls(skillName: string, limit: number = 30): Array<SkillCall & SkillResult> {
     const stmt = this.db.prepare(`
-      SELECT id, skill_name, timestamp, session_id, context_summary, user_question
-      FROM skill_calls
-      WHERE skill_name = ?
-      ORDER BY timestamp DESC
+      SELECT
+        sc.*,
+        sr.success_rate,
+        sr.user_rating,
+        sr.turns,
+        sr.follow_up_questions,
+        sr.accepted_suggestions
+      FROM skill_calls sc
+      LEFT JOIN skill_results sr ON sc.id = sr.call_id
+      WHERE sc.skill_name = ?
+      ORDER BY sc.timestamp DESC
       LIMIT ?
     `);
 
-    const rows = stmt.all(skillName, limit) as SkillCall[];
+    const rows = stmt.all(skillName, limit) as Array<SkillCall & SkillResult>;
     return rows;
   }
 

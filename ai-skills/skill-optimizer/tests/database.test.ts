@@ -70,9 +70,8 @@ describe('Database', () => {
         accepted_suggestions: 1
       };
 
-      const resultId = await db.recordSkillResult(result);
-      expect(resultId).toBeDefined();
-      expect(resultId).toBeGreaterThan(0);
+      await db.recordSkillResult(result);
+      // Method now returns void, so we just verify it doesn't throw
 
       // Check metrics were updated
       const metrics = await db.getSkillMetrics('test-skill');
@@ -115,10 +114,10 @@ describe('Database', () => {
   });
 
   describe('getRecentCalls', () => {
-    it('should return calls in descending order by timestamp', async () => {
+    it('should return calls with results in descending order by timestamp', async () => {
       const skillName = 'recent-calls-skill';
 
-      // Record multiple calls
+      // Record multiple calls with results
       const callIds: number[] = [];
       for (let i = 0; i < 5; i++) {
         const id = await db.recordSkillCall({
@@ -128,16 +127,32 @@ describe('Database', () => {
           user_question: `Question ${i}`
         });
         callIds.push(id);
+
+        // Record a result for each call
+        await db.recordSkillResult({
+          call_id: id,
+          success_rate: 0.5 + (i * 0.1),
+          user_rating: 3 + i,
+          turns: 2 + i,
+          follow_up_questions: i,
+          accepted_suggestions: i
+        });
       }
 
       // Get recent calls with limit 3
       const recentCalls = await db.getRecentCalls(skillName, 3);
       expect(recentCalls).toHaveLength(3);
 
-      // All returned calls should have IDs (since they're retrieved from DB)
+      // All returned calls should have IDs and result fields
       expect(recentCalls[0].id).toBeDefined();
+      expect(recentCalls[0].success_rate).toBeDefined();
+      expect(recentCalls[0].turns).toBeDefined();
       expect(recentCalls[1].id).toBeDefined();
+      expect(recentCalls[1].success_rate).toBeDefined();
+      expect(recentCalls[1].turns).toBeDefined();
       expect(recentCalls[2].id).toBeDefined();
+      expect(recentCalls[2].success_rate).toBeDefined();
+      expect(recentCalls[2].turns).toBeDefined();
 
       // All returned calls should be for the correct skill
       expect(recentCalls.every(call => call.skill_name === skillName)).toBe(true);
