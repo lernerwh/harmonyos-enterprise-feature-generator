@@ -141,25 +141,71 @@ cat README.md       # 查看使用说明
 
 ## 示例对话
 
-**用户**: 创建一个日志分析技能
+### 示例 1: Simple 模板
 
-**AI**:
-好的！我将使用 simple 模板创建 `log-analyzer` 技能。
+**User**: 创建一个日志分析技能
+
+**AI**: 好的！我将使用 **simple** 模板创建 `log-analyzer` 技能。
 
 **请确认**:
-1. 技能名称: `log-analyzer` ✓
-2. 功能描述: 分析日志文件并提取关键错误信息 ✓
-3. 模板: simple (推荐，1分钟完成) ✓
+1. 名称: `log-analyzer` ✓
+2. 描述: 分析日志文件并提取关键错误信息 ✓
+3. 模板: simple (1分钟) ✓
 
-[生成完成]
+[生成中...]
+✅ 完成！生成 2 个文件:
+- SKILL.md (105行)
+- README.md (52行)
+- plugin.json
+- package.json
 
-**生成内容**:
-- ✅ SKILL.md (105行)
-- ✅ README.md (52行)
-- ✅ plugin.json
-- ✅ package.json
+**提示**: 编辑 SKILL.md 添加分析规则即可使用
 
-**下一步**: 编辑 SKILL.md 添加具体分析规则
+---
+
+### 示例 2: Tool 模板
+
+**User**: 写一个JSON格式化工具技能
+
+**AI**: 检测到需要代码处理，推荐 **tool** 模板。
+
+**请确认**:
+1. 名称: `json-formatter` ✓
+2. 描述: 格式化和验证 JSON 文件 ✓
+3. 模板: tool (包含 TypeScript) ✓
+
+[生成中...]
+✅ 完成！生成 4 个文件:
+- SKILL.md
+- README.md
+- src/index.ts (类型定义)
+- src/types.ts
+- tsconfig.json
+
+**提示**: 在 src/index.ts 实现格式化逻辑
+
+---
+
+### 示例 3: Full 模板
+
+**User**: 创建一个完整的CI/CD监控技能
+
+**AI**: 这是一个复杂系统，推荐 **full** 模板。
+
+**请确认**:
+1. 名称: `cicd-monitor` ✓
+2. 描述: 监控 CI/CD 流水线并报告状态 ✓
+3. 模板: full (完整工具链) ✓
+
+[生成中...]
+✅ 完成！生成 8 个文件:
+- SKILL.md + README.md
+- src/ (TypeScript 代码框架)
+- scripts/ (build/test/deploy)
+- tools/ (验证和生成工具)
+- tests/ (测试框架)
+
+**提示**: 运行 ./scripts/setup.sh 初始化开发环境
 
 ## 常见问题
 
