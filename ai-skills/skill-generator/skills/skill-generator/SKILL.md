@@ -153,7 +153,7 @@ cat README.md       # 查看使用说明
 3. 模板: simple (1分钟) ✓
 
 [生成中...]
-✅ 完成！生成 2 个文件:
+✅ 完成！生成 4 个文件:
 - SKILL.md (105行)
 - README.md (52行)
 - plugin.json
@@ -175,7 +175,7 @@ cat README.md       # 查看使用说明
 3. 模板: tool (包含 TypeScript) ✓
 
 [生成中...]
-✅ 完成！生成 4 个文件:
+✅ 完成！生成 5 个文件:
 - SKILL.md
 - README.md
 - src/index.ts (类型定义)
@@ -199,11 +199,14 @@ cat README.md       # 查看使用说明
 
 [生成中...]
 ✅ 完成！生成 8 个文件:
-- SKILL.md + README.md
-- src/ (TypeScript 代码框架)
-- scripts/ (build/test/deploy)
-- tools/ (验证和生成工具)
-- tests/ (测试框架)
+- SKILL.md
+- README.md
+- src/index.ts
+- src/types.ts
+- tsconfig.json
+- scripts/build.sh
+- scripts/test.sh
+- scripts/setup.sh
 
 **提示**: 运行 ./scripts/setup.sh 初始化开发环境
 
