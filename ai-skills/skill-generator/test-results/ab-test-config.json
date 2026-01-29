@@ -1,0 +1,61 @@
+{
+  "testName": "skill-generator-optimization",
+  "startDate": "2025-01-29",
+  "duration": "14 days",
+  "groups": {
+    "A": {
+      "name": "Control Group",
+      "description": "使用原版1088行SKILL.md",
+      "file": "SKILL.md.original",
+      "sampleSize": 50
+    },
+    "B": {
+      "name": "Test Group",
+      "description": "使用新版300行快速指南",
+      "file": "SKILL.md",
+      "sampleSize": 50
+    }
+  },
+  "metrics": {
+    "primary": [
+      {
+        "name": "对话轮次",
+        "target": "≤ 2.5",
+        "current": "5.3",
+        "improvement": "-53%"
+      },
+      {
+        "name": "成功率",
+        "target": "≥ 85%",
+        "current": "67%",
+        "improvement": "+27%"
+      }
+    ],
+    "secondary": [
+      {
+        "name": "用户满意度",
+        "target": "≥ 4.2/5.0",
+        "current": "3.8/5.0"
+      },
+      {
+        "name": "完成时间",
+        "target": "≤ 3 分钟",
+        "current": "~5 分钟"
+      },
+      {
+        "name": "REFERENCE.md 查阅率",
+        "target": "≤ 30%",
+        "current": "N/A"
+      }
+    ]
+  },
+  "successCriteria": {
+    "efficiency": "对话轮次减少 ≥ 50%",
+    "quality": "成功率提升 ≥ 20%",
+    "satisfaction": "用户满意度 ≥ 4.0/5.0"
+  },
+  "rollback": {
+    "trigger": "B组未达到任一成功标准",
+    "action": "恢复原版SKILL.md，保留REFERENCE.md"
+  }
+}
